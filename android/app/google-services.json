@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1000065873402",
+    "firebase_url": "https://dyplom-e1468-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "dyplom-e1468",
+    "storage_bucket": "dyplom-e1468.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000065873402:android:15f72f21a4f84aa19d2043",
+        "android_client_info": {
+          "package_name": "com.example.dyplom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000065873402-td6ui44eo41lig46oq5pp2264kfpi3cd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQAn14GKTyGBC4c3yestvx32vMqpfAnZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000065873402-td6ui44eo41lig46oq5pp2264kfpi3cd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1000065873402-q4koe2tu9f060c42pvhb6b9gif4c4qta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dyplom"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
