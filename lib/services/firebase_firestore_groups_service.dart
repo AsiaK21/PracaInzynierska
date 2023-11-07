@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
-import 'package:projekt_inzynierski/chats_Joanna_Kozar/models/group.dart';
+import 'package:projekt_inzynierski/models/group.dart';
 
 import 'firebase_realtime_database_groups_service.dart';
 

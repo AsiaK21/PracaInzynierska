@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ChatsScreen extends StatefulWidget {
-  final MaterialColor bordowyKolor;
+import '../forum_chat/forum_chat_screen.dart';
+import '../private_chat_screen/private_chat_screen.dart';
 
-  const ChatsScreen({Key? key, required this.bordowyKolor})
-      : super(key: key);
+class ChatsScreen extends StatefulWidget {
+  const ChatsScreen({Key? key}) : super(key: key);
 
   @override
   _ChatsScreenState createState() => _ChatsScreenState();
@@ -17,6 +17,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chats'),
+        automaticallyImplyLeading: false, // Blokuje przycisk wstecz
       ),
       body: Center(
         child: Column(
@@ -27,7 +28,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/forum_chat');
+                  // Przenosimy się do ekranu forum_chat_screen.dart
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ForumChatScreen(),
+                    ),
+                  );
                 },
                 child: const Text('Forum', style: TextStyle(fontSize: 20)),
               ),
@@ -38,7 +45,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/private_chat');
+                  // Przenosimy się do ekranu private_chat_screen.dart
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivateChatScreen(),
+                    ),
+                  );
                 },
                 child: const Text('Prywatny', style: TextStyle(fontSize: 20)),
               ),

@@ -1,20 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projekt_inzynierski/chats_Joanna_Kozar/services/auth_service.dart';
+import 'package:projekt_inzynierski/services/auth_service.dart';
 
-import 'package:projekt_inzynierski/chats_Joanna_Kozar/models/chat_message.dart';
-import 'package:projekt_inzynierski/chats_Joanna_Kozar/models/chat.dart';
+import 'package:projekt_inzynierski/models/chat_message.dart';
+import 'package:projekt_inzynierski/models/chat.dart';
 
 import 'package:uuid/uuid.dart';
 
-import 'package:projekt_inzynierski/chats_Joanna_Kozar/services/firebase_firestore_private_chats_service.dart';
-import 'package:projekt_inzynierski/chats_Joanna_Kozar/services/firebase_realtime_database_private_chats_service.dart';
+import 'package:projekt_inzynierski/services/firebase_firestore_private_chats_service.dart';
+import 'package:projekt_inzynierski/services/firebase_realtime_database_private_chats_service.dart';
 
 
 class PrivateChatScreen extends StatefulWidget {
-  final MaterialColor bordowyKolor;
+  //final MaterialColor bordowyKolor;
 
-  const PrivateChatScreen({Key? key, required this.bordowyKolor}) : super(key: key);
+  const PrivateChatScreen({Key? key}) : super(key: key);
 
   @override
   _PrivateChatScreenState createState() => _PrivateChatScreenState();
@@ -27,8 +27,8 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
   String removeUserEmail = '';
   TextEditingController messageController = TextEditingController();
   TextEditingController chatNameController = TextEditingController();
-  bool isGroupListExpanded = true;
-  bool isRightGroupListExpanded = true;
+  //bool isGroupListExpanded = true;
+  //bool isRightGroupListExpanded = true;
   FirebaseFirestoreGroupsService firestoreService = FirebaseFirestoreGroupsService();
   FirebaseRealtimePrivateService realtimeService = FirebaseRealtimePrivateService();
   AuthService authService = AuthService();
@@ -68,23 +68,17 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
     }
   }
 
-  // void _addUserToChat(String chatId, String email) {
-  //   if (chatId.isNotEmpty && email.isNotEmpty) {
-  //     firestoreService.addUserToChat(chatId, email);
-  //   }
+  // void _toggleGroupList() {
+  //   setState(() {
+  //     isGroupListExpanded = !isGroupListExpanded;
+  //   });
   // }
 
-  void _toggleGroupList() {
-    setState(() {
-      isGroupListExpanded = !isGroupListExpanded;
-    });
-  }
-
-  void _toggleRightGroupList() {
-    setState(() {
-      isRightGroupListExpanded = !isRightGroupListExpanded;
-    });
-  }
+  // void _toggleRightGroupList() {
+  //   setState(() {
+  //     isRightGroupListExpanded = !isRightGroupListExpanded;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -93,27 +87,24 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Opacity(
-              opacity: 0.5,
-              child: IconButton(
-                onPressed: _toggleGroupList,
-                icon: Icon(
-                  isGroupListExpanded ? Icons.arrow_back : Icons.list_alt,
-                ),
+            IconButton(
+              onPressed: () {
+                _showLeftSidebar();
+              },
+              icon: Icon(
+                Icons.list_alt,
               ),
             ),
             Text(
               selectedChat.name,
               style: const TextStyle(fontSize: 18.0),
             ),
-            Opacity(
-              opacity: 0.5,
-              child: IconButton(
-                onPressed: _toggleRightGroupList,
-                icon: Icon(
-                  isRightGroupListExpanded ? Icons.arrow_forward : Icons
-                      .settings,
-                ),
+            IconButton(
+              onPressed: () {
+                _showRightPopup(context);
+              },
+              icon: Icon(
+                Icons.more_vert,
               ),
             ),
           ],
@@ -121,48 +112,6 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       ),
       body: Row(
         children: [
-          // Left sidebar with groups
-          AnimatedContainer(
-            width: isGroupListExpanded ? 140.0 : 0.0,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-            child: isGroupListExpanded
-                ? Container(
-              color: Colors.grey[200],
-              child: ListView.builder(
-                itemCount: chats.length,
-                itemBuilder: (context, index) {
-                  final Chat chat = chats[index];
-
-                  final bool isSelected = chat.id == selectedChat.id;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedChat = chat;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 1.0),
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? widget.bordowyKolor.withOpacity(0.5)
-                            : Colors.white,
-                        border: Border.all(color: Colors.black),
-                      ),
-                      child: Text(
-                        chat.name,
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            )
-                : null,
-          ),
           Expanded(
             child: Column(
               children: [
@@ -220,14 +169,10 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                                     decoration: BoxDecoration(
                                       color: isCurrentUser
                                           ? Colors.white
-                                          : widget.bordowyKolor.withOpacity(
-                                        0.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        8.0,
-                                      ),
+                                          : Colors.purpleAccent.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(8.0),
                                       border: Border.all(
-                                        color: widget.bordowyKolor,
+                                        color: Colors.purpleAccent,
                                       ),
                                     ),
                                     padding: const EdgeInsets.all(8.0),
@@ -267,11 +212,11 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                             labelText: 'Napisz wiadomość ...',
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: widget.bordowyKolor.withOpacity(0.5),
+                                color: Colors.purpleAccent,
                               ),
                             ),
                             filled: true,
-                            fillColor: widget.bordowyKolor.withOpacity(0.5),
+                            fillColor: Colors.purpleAccent.withOpacity(0.5),
                             labelStyle: const TextStyle(
                               color: Colors.black,
                             ),
@@ -282,13 +227,13 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                       ElevatedButton(
                         onPressed: () {
                           String message = messageController.text;
-                          sendMessage(message,selectedChat.id);
+                          sendMessage(message, selectedChat.id);
                           messageController.clear();
                         },
                         child: const Text(
                           'Wyślij',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -298,42 +243,10 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
               ],
             ),
           ),
-          AnimatedContainer(
-            width: isRightGroupListExpanded ? 140.0 : 0.0,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-            child: isRightGroupListExpanded
-                ? Container(
-              color: Colors.grey[300],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      _showCreateGroupDialog(context);
-                    },
-                    child: const Text('Utwórz czat'),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      _showDeleteChatDialog(selectedChat.id);
-                    },
-                    child: const Text('Usuń czat'),
-                  ),
-                  if (isRightGroupListExpanded)
-                    const SizedBox(height: 20),
-                ],
-              ),
-            )
-                : null,
-          ),
         ],
       ),
     );
   }
-
   // sendGroupMessage(String sender, String group, String message, String groupId)
   void sendMessage(String message, String groupId) {
     if (groupId.isNotEmpty && message.isNotEmpty && currentUser != null) {
@@ -444,4 +357,77 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       print('Error deleting group: $error');
     }
   }
+  void _showLeftSidebar() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.7, // Adjust the height as needed
+          color: Colors.purpleAccent.withOpacity(0.2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 20),
+              for (Chat chat in chats)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        selectedChat = chat;
+                      });
+                      Navigator.pop(context); // Close the popup
+                    },
+                    child: Text(
+                      chat.name,
+                      //style: const TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showRightPopup(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.purpleAccent.withOpacity(0.2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the popup
+                    _showCreateGroupDialog(context); // Show create chat dialog
+                  },
+                  child: const Text('Utwórz czat'),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the popup
+                    _showDeleteChatDialog(selectedChat.id); // Show delete chat dialog
+                  },
+                  child: const Text('Usuń czat'),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 }

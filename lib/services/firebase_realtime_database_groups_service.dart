@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:projekt_inzynierski/chats_Joanna_Kozar/models/chat_message.dart';
+import 'package:projekt_inzynierski/models/chat_message.dart';
 
 class FirebaseRealtimeGroupsService {
   static final FirebaseDatabase database = FirebaseDatabase.instance;
