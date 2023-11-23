@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../forum_chat/forum_chat_screen.dart';
 import '../private_chat_screen/private_chat_screen.dart';
+import '../univercity_chat/univercity_chat_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({Key? key}) : super(key: key);
@@ -12,12 +13,13 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  static const String routeName = '/chats';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chats'),
-        automaticallyImplyLeading: false, // Blokuje przycisk wstecz
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Column(
@@ -28,7 +30,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  // Przenosimy się do ekranu forum_chat_screen.dart
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -45,7 +46,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  // Przenosimy się do ekranu private_chat_screen.dart
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -54,6 +54,21 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   );
                 },
                 child: const Text('Prywatny', style: TextStyle(fontSize: 20)),
+              ),
+            ), const SizedBox(height: 16.0),
+            SizedBox(
+              width: 200,
+              height: 60,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UnivercityChatScreen(),
+                    ),
+                  );
+                },
+                child: const Text('Uczelnia', style: TextStyle(fontSize: 20)),
               ),
             ),
           ],

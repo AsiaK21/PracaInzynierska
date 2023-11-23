@@ -143,8 +143,46 @@ class FirebaseFirestoreGroupsService {
       print('Error removing user from group: $error');
     });
   }
+  // Future<void> deleteGroup(String groupId) async {
+  //   try {
+  //     await FirebaseRealtimeGroupsService().deleteGroupChatMessages(groupId);
+  //
+  //     QuerySnapshot groupSnapshot = await _firestore
+  //         .collection('groups')
+  //         .where('id', isEqualTo: groupId)
+  //         .get();
+  //
+  //     groupSnapshot.docs.forEach( (e) async => {
+  //       await _firestore.collection("groups").doc(e.id).delete()
+  //     });
+  //
+  //     QuerySnapshot usersWithGroup =
+  //     await _firestore.collection('users').where('groups', arrayContains: groupId).get();
+  //
+  //     for (QueryDocumentSnapshot userDoc in usersWithGroup.docs) {
+  //       DocumentReference userRef = _firestore.collection('users').doc(userDoc.id);
+  //
+  //       DocumentReference subcollectionRef = userRef.collection('groups').doc(groupId);
+  //
+  //       await subcollectionRef.delete();
+  //
+  //       await userRef.update({
+  //         'groups': FieldValue.arrayRemove([groupId]),
+  //       });
+  //     }
+  //
+  //     print('Group deleted successfully');
+  //   } catch (error) {
+  //     print('Error deleting group: $error');
+  //   }
+  // }
   Future<void> deleteGroup(String groupId) async {
     try {
+      if (groupId.startsWith('faculty_')) {
+        print('Nie można usunąć grupy z przedrostkiem "faculty_".');
+        return;
+      }
+
       await FirebaseRealtimeGroupsService().deleteGroupChatMessages(groupId);
 
       QuerySnapshot groupSnapshot = await _firestore
@@ -152,7 +190,7 @@ class FirebaseFirestoreGroupsService {
           .where('id', isEqualTo: groupId)
           .get();
 
-      groupSnapshot.docs.forEach( (e) async => {
+      groupSnapshot.docs.forEach((e) async => {
         await _firestore.collection("groups").doc(e.id).delete()
       });
 
@@ -171,9 +209,9 @@ class FirebaseFirestoreGroupsService {
         });
       }
 
-      print('Group deleted successfully');
+      print('Grupa została pomyślnie usunięta.');
     } catch (error) {
-      print('Error deleting group: $error');
+      print('Błąd podczas usuwania grupy: $error');
     }
   }
 
