@@ -6,36 +6,6 @@ import 'firebase_realtime_database_groups_service.dart';
 
 class FirebaseFirestoreGroupsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-//nieużywana funkcja pobierająca grupy stworzone przez uzytkownika
-  Future<List<Group>> getUserOwnedGroups(String userEmail) async {
-    try {
-      DocumentSnapshot userSnapshot =
-      await _firestore.collection('users').doc(userEmail).get();
-
-      if (userSnapshot.exists) {
-        List<dynamic> groupIds = userSnapshot['groups'];
-        print(groupIds);
-        List<Group> ownedGroups = [];
-
-        for (String groupId in groupIds) {
-          DocumentSnapshot groupSnapshot =
-          await _firestore.collection('groups').doc(groupId).get();
-          if (groupSnapshot.exists) {
-            ownedGroups.add(Group(id: groupSnapshot['id'], name: groupSnapshot['name'], participants: []));
-            // ownedGroupNames.add(groupSnapshot['name']);
-          }
-        }
-
-        return ownedGroups;
-      } else {
-        print('User not found');
-        return [];
-      }
-    } catch (error) {
-      print('Error getting user owned groups: $error');
-      return [];
-    }
-  }
 
   Future<List<Group>> getUserJoinedGroups(String userEmail) async {
     try {
@@ -51,7 +21,6 @@ class FirebaseFirestoreGroupsService {
           joinedGroupNames.add(Group(id: doc['id'], name: doc['name'], participants: []));
         }
       }
-
       return joinedGroupNames;
     } catch (error) {
       print('Error getting user joined groups: $error');
@@ -86,10 +55,9 @@ class FirebaseFirestoreGroupsService {
     }
   }
 
-  // Funkcja do tworzenia grupy
   Future<void> createGroupWithParticipants(String groupName, List<String> participants) async {
     try {
-      String groupId = const Uuid().v4(); // Generate UUID
+      String groupId = const Uuid().v4();
       DocumentReference groupRef =
       await _firestore.collection('groups').add({
         'id': groupId,
@@ -143,46 +111,9 @@ class FirebaseFirestoreGroupsService {
       print('Error removing user from group: $error');
     });
   }
-  // Future<void> deleteGroup(String groupId) async {
-  //   try {
-  //     await FirebaseRealtimeGroupsService().deleteGroupChatMessages(groupId);
-  //
-  //     QuerySnapshot groupSnapshot = await _firestore
-  //         .collection('groups')
-  //         .where('id', isEqualTo: groupId)
-  //         .get();
-  //
-  //     groupSnapshot.docs.forEach( (e) async => {
-  //       await _firestore.collection("groups").doc(e.id).delete()
-  //     });
-  //
-  //     QuerySnapshot usersWithGroup =
-  //     await _firestore.collection('users').where('groups', arrayContains: groupId).get();
-  //
-  //     for (QueryDocumentSnapshot userDoc in usersWithGroup.docs) {
-  //       DocumentReference userRef = _firestore.collection('users').doc(userDoc.id);
-  //
-  //       DocumentReference subcollectionRef = userRef.collection('groups').doc(groupId);
-  //
-  //       await subcollectionRef.delete();
-  //
-  //       await userRef.update({
-  //         'groups': FieldValue.arrayRemove([groupId]),
-  //       });
-  //     }
-  //
-  //     print('Group deleted successfully');
-  //   } catch (error) {
-  //     print('Error deleting group: $error');
-  //   }
-  // }
+
   Future<void> deleteGroup(String groupId) async {
     try {
-      if (groupId.startsWith('faculty_')) {
-        print('Nie można usunąć grupy z przedrostkiem "faculty_".');
-        return;
-      }
-
       await FirebaseRealtimeGroupsService().deleteGroupChatMessages(groupId);
 
       QuerySnapshot groupSnapshot = await _firestore
@@ -214,7 +145,4 @@ class FirebaseFirestoreGroupsService {
       print('Błąd podczas usuwania grupy: $error');
     }
   }
-
-
-
 }

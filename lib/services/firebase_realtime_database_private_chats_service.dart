@@ -8,11 +8,11 @@ class FirebaseRealtimePrivateService {
   static Future<void> sendPrivateMessage(String sender, String chat, String message, String chatId) async {
     final privateChatMessageRef = privateChatReference.child(chatId).push();
     await privateChatMessageRef.set({
-      'id': privateChatMessageRef.key, // Use the generated key as ID
+      'id': privateChatMessageRef.key,
       'sender': sender,
       'chat': chat,
       'message': message,
-      'chatId': chatId, // Use the passed groupId
+      'chatId': chatId,
       'timestamp': DateTime.now().toUtc().millisecondsSinceEpoch,
     });
   }

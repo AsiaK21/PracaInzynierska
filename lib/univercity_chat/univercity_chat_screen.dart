@@ -22,7 +22,6 @@ class UnivercityChatScreen extends StatefulWidget {
 }
 
 class _UnivercityChatScreen extends State<UnivercityChatScreen> {
-  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
   List<Group> groups = [];
@@ -31,8 +30,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
   String removeUserEmail = '';
   TextEditingController messageController = TextEditingController();
   TextEditingController groupNameController = TextEditingController();
-  //bool isGroupListExpanded = true;
-  //bool isRightGroupListExpanded = true;
   FirebaseFirestoreUnivercityService firestoreService = FirebaseFirestoreUnivercityService();
   FirebaseRealtimeGroupsService realtimeService = FirebaseRealtimeGroupsService();
   AuthService authService = AuthService();
@@ -42,8 +39,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
   @override
   void initState() {
     super.initState();
-    // _configureFirebaseMessaging();
-    // _configureLocalNotifications();
     _auth.authStateChanges().listen((user) {
       setState(() {
         currentUser = user;
@@ -51,58 +46,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
       _loadUserGroups(user);
     });
   }
-
-  // void _configureFirebaseMessaging() {
-  //   _firebaseMessaging.configure(
-  //     onMessage: (Map<String, dynamic> message) async {
-  //       print("onMessage: $message");
-  //       _firebaseMessaging.getToken().then((token) {
-  //         print('FCM Token: $token');
-  //         // Save the token or send it to your server
-  //       });
-  //
-  //       // Show a local notification when a message is received.
-  //       _showNotification(message['notification']['title'], message['notification']['body']);
-  //     },
-  //     // Existing code...
-  //   );
-  // }
-
-  // void _showNotification(String title, String body) async {
-  //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-  //   AndroidNotificationDetails(
-  //     'your_channel_id',
-  //     'your_channel_name',
-  //     'your_channel_description',
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //   );
-  //   const NotificationDetails platformChannelSpecifics =
-  //   NotificationDetails(android: androidPlatformChannelSpecifics);
-  //
-  //   await flutterLocalNotificationsPlugin.show(
-  //     0,
-  //     title,
-  //     body,
-  //     platformChannelSpecifics,
-  //     payload: 'item x',
-  //   );
-  // }
-
-  // void _configureLocalNotifications() async {
-  //   const AndroidInitializationSettings initializationSettingsAndroid =
-  //   AndroidInitializationSettings('app_icon');
-  //
-  //   final InitializationSettings initializationSettings =
-  //   InitializationSettings(android: initializationSettingsAndroid);
-  //
-  //   await flutterLocalNotificationsPlugin.initialize(
-  //     initializationSettings,
-  //     onSelectNotification: (String? payload) async {
-  //       // Handle notification tap here.
-  //     },
-  //   );
-  // }
 
   void _loadUserGroups(User? user) async {
     if (user != null) {
@@ -113,17 +56,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
       });
     }
   }
-
-  // void _createGroup() async {
-  //   String groupName = groupNameController.text;
-  //   if (groupName.isNotEmpty) {
-  //     List<String> participants = [currentUser!.email!];
-  //     String groupId = const Uuid().v4();
-  //     await firestoreService.createGroup(groupId, groupName, participants);
-  //     _loadUserGroups(currentUser);
-  //     groupNameController.clear();
-  //   }
-  // }
 
   void _addUserToGroup(String groupId, String email) {
     if (groupId.isNotEmpty && email.isNotEmpty) {
@@ -136,18 +68,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
       firestoreService.removeUserFromGroup(groupId, email);
     }
   }
-
-  // void _toggleGroupList() {
-  //   setState(() {
-  //     isGroupListExpanded = !isGroupListExpanded;
-  //   });
-  // }
-  //
-  // void _toggleRightGroupList() {
-  //   setState(() {
-  //     isRightGroupListExpanded = !isRightGroupListExpanded;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -164,9 +84,12 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
                 Icons.list_alt,
               ),
             ),
-            Text(
-              selectedGroup.name,
-              style: const TextStyle(fontSize: 18.0),
+            Expanded(
+              child: Text(
+                selectedGroup.name,
+                style: const TextStyle(fontSize: 18.0),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             IconButton(
               onPressed: () {
@@ -181,48 +104,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
       ),
       body: Row(
         children: [
-          // Left sidebar with groups
-          // AnimatedContainer(
-          //   width: isGroupListExpanded ? 140.0 : 0.0,
-          //   duration: const Duration(milliseconds: 200),
-          //   curve: Curves.easeInOut,
-          //   child: isGroupListExpanded
-          //       ? Container(
-          //     color: Colors.grey[200],
-          //     child: ListView.builder(
-          //       itemCount: groups.length,
-          //       itemBuilder: (context, index) {
-          //         final Group group = groups[index];
-          //
-          //         final bool isSelected = group.id == selectedGroup.id;
-          //         return GestureDetector(
-          //           onTap: () {
-          //             setState(() {
-          //               selectedGroup = group;
-          //             });
-          //           },
-          //           child: Container(
-          //             margin: const EdgeInsets.only(bottom: 1.0),
-          //             padding: const EdgeInsets.all(8.0),
-          //             decoration: BoxDecoration(
-          //               color: isSelected
-          //                   ? DefaultSelectionStyle.defaultColor.withOpacity(0.5)
-          //                   : Colors.white,
-          //               border: Border.all(color: Colors.black),
-          //             ),
-          //             child: Text(
-          //               group.name,
-          //               style: const TextStyle(
-          //                 color: Colors.black,
-          //               ),
-          //             ),
-          //           ),
-          //         );
-          //       },
-          //     ),
-          //   )
-          //       : null,
-          // ),
           Expanded(
             child: Column(
               children: [
@@ -358,74 +239,8 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
               ],
             ),
           ),
-          // AnimatedContainer(
-          //   width: isRightGroupListExpanded ? 140.0 : 0.0,
-          //   duration: const Duration(milliseconds: 200),
-          //   curve: Curves.easeInOut,
-          //   child: isRightGroupListExpanded
-          //       ? Container(
-          //     color: Colors.grey[300],
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.stretch,
-          //       children: [
-          //         const SizedBox(height: 20),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _showCreateGroupDialog(context);
-          //           },
-          //           child: const Text('Utwórz grupę'),
-          //         ),
-          //         if (isRightGroupListExpanded)
-          //           const SizedBox(height: 20),
-          //         const Text('Dodaj użytkownika:'),
-          //         TextFormField(
-          //           onChanged: (value) {
-          //             setState(() {
-          //               addUserEmail = value;
-          //             });
-          //           },
-          //           decoration: const InputDecoration(
-          //             labelText: 'Email użytkownika',
-          //           ),
-          //         ),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _addUserToGroup(selectedGroup.id, addUserEmail);
-          //           },
-          //           child: const Text('Dodaj użytkownika'),
-          //         ),
-          //         const Text('Usuń użytkownika:'),
-          //         TextFormField(
-          //           onChanged: (value) {
-          //             setState(() {
-          //               removeUserEmail = value;
-          //             });
-          //           },
-          //           decoration: const InputDecoration(
-          //             labelText: 'Email użytkownika',
-          //           ),
-          //         ),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _removeUserFromGroup(selectedGroup.id, removeUserEmail);
-          //           },
-          //           child: const Text('Usuń użytkownika'),
-          //         ),
-          //         const SizedBox(height: 50),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _showDeleteGroupDialog(selectedGroup.id);
-          //           },
-          //           child: const Text('Usuń grupę'),
-          //         ),
-          //       ],
-          //     ),
-          //   )
-          //       : null,
-          // ),
         ],
       ),
-
     );
   }
 
@@ -467,7 +282,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
                     },
                     child: Text(
                       group.name,
-                      // style: const TextStyle(color: Colors.purple),
                     ),
                   ),
                 ),
@@ -489,7 +303,7 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
             children: [
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.all(16.0), // Zmienione na EdgeInsets.all
+                padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     _showAddUserDialog(context);
@@ -498,7 +312,7 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0), // Zmienione na EdgeInsets.all
+                padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     _showRemoveUserDialog(context);
@@ -538,13 +352,13 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
             TextButton(
               onPressed: () {
                 _addUserToGroup(selectedGroup.id, email);
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Dodaj użytkownika'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Anuluj'),
             ),
@@ -578,13 +392,13 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
             TextButton(
               onPressed: () {
                 _removeUserFromGroup(selectedGroup.id, email);
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Usuń użytkownika'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Anuluj'),
             ),
@@ -593,6 +407,4 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
       },
     );
   }
-
-
 }

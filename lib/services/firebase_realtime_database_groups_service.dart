@@ -8,11 +8,11 @@ class FirebaseRealtimeGroupsService {
   static Future<void> sendGroupMessage(String sender, String group, String message, String groupId) async {
     final groupChatMessageRef = groupChatReference.child(groupId).push();
     await groupChatMessageRef.set({
-      'id': groupChatMessageRef.key, // Use the generated key as ID
+      'id': groupChatMessageRef.key,
       'sender': sender,
       'group': group,
       'message': message,
-      'groupId': groupId, // Use the passed groupId
+      'groupId': groupId,
       'timestamp': DateTime.now().toUtc().millisecondsSinceEpoch,
     });
   }

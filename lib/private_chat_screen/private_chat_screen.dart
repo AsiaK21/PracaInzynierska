@@ -12,7 +12,6 @@ import 'package:projekt_inzynierski/services/firebase_realtime_database_private_
 
 
 class PrivateChatScreen extends StatefulWidget {
-  //final MaterialColor bordowyKolor;
 
   const PrivateChatScreen({Key? key}) : super(key: key);
 
@@ -27,8 +26,6 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
   String removeUserEmail = '';
   TextEditingController messageController = TextEditingController();
   TextEditingController chatNameController = TextEditingController();
-  //bool isGroupListExpanded = true;
-  //bool isRightGroupListExpanded = true;
   FirebaseFirestoreGroupsService firestoreService = FirebaseFirestoreGroupsService();
   FirebaseRealtimePrivateService realtimeService = FirebaseRealtimePrivateService();
   AuthService authService = AuthService();
@@ -60,25 +57,13 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
     String chatName = chatNameController.text;
     String secondParticipant = addUserEmail;
     if (chatName.isNotEmpty) {
-      List<String> participants = [currentUser!.email!,secondParticipant];
+      List<String> participants = [currentUser!.email!, secondParticipant];
       String chatId = const Uuid().v4();
       await firestoreService.createChat(chatId, chatName, participants);
       _loadUserChats(currentUser);
       chatNameController.clear();
     }
   }
-
-  // void _toggleGroupList() {
-  //   setState(() {
-  //     isGroupListExpanded = !isGroupListExpanded;
-  //   });
-  // }
-
-  // void _toggleRightGroupList() {
-  //   setState(() {
-  //     isRightGroupListExpanded = !isRightGroupListExpanded;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +80,12 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                 Icons.list_alt,
               ),
             ),
-            Text(
-              selectedChat.name,
-              style: const TextStyle(fontSize: 18.0),
+            Expanded(
+              child: Text(
+                selectedChat.name,
+                style: const TextStyle(fontSize: 18.0),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             IconButton(
               onPressed: () {
@@ -135,7 +123,6 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                             final isCurrentUser =
                                 message.sender == currentUser!.email;
                             final messageContent = message.message;
-
                             return Container(
                               alignment: isCurrentUser
                                   ? Alignment.centerRight
@@ -247,7 +234,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       ),
     );
   }
-  // sendGroupMessage(String sender, String group, String message, String groupId)
+
   void sendMessage(String message, String groupId) {
     if (groupId.isNotEmpty && message.isNotEmpty && currentUser != null) {
       FirebaseRealtimePrivateService.sendPrivateMessage(
@@ -295,7 +282,6 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
             ElevatedButton(
               onPressed: () {
                 _createChat();
-               // _addUserToChat(selectedChat.id, addUserEmail);
                 Navigator.pop(context);
               },
               child: const Text('Utwórz czat prywatny z użytkownikiem'),
@@ -338,13 +324,12 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       },
     );
   }
+
   void _deleteChat(String chatId) async {
     try {
-      // Delete the group using the service
       await firestoreService.deleteChat(chatId);
 
       setState(() {
-        // Remove the group from the local list
         Chat chatToDelete = chats.firstWhere((chat) => chat.id == chatId);
         chats.remove(chatToDelete);
         if (chats.isNotEmpty) {
@@ -357,34 +342,33 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       print('Error deleting group: $error');
     }
   }
+
   void _showLeftSidebar() {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.7, // Adjust the height as needed
+          height: MediaQuery.of(context).size.height * 0.7,
           color: Colors.purpleAccent.withOpacity(0.2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 20),
-              for (Chat chat in chats)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedChat = chat;
-                      });
-                      Navigator.pop(context); // Close the popup
-                    },
-                    child: Text(
-                      chat.name,
-                      //style: const TextStyle(color: Colors.black),
-                    ),
+          child: ListView.builder(
+            itemCount: chats.length,
+            itemBuilder: (context, index) {
+              final Chat chat = chats[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      selectedChat = chat;
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    chat.name,
                   ),
                 ),
-            ],
+              );
+            },
           ),
         );
       },
@@ -405,8 +389,8 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close the popup
-                    _showCreateGroupDialog(context); // Show create chat dialog
+                    Navigator.pop(context);
+                    _showCreateGroupDialog(context);
                   },
                   child: const Text('Utwórz czat'),
                 ),
@@ -416,8 +400,8 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close the popup
-                    _showDeleteChatDialog(selectedChat.id); // Show delete chat dialog
+                    Navigator.pop(context);
+                    _showDeleteChatDialog(selectedChat.id);
                   },
                   child: const Text('Usuń czat'),
                 ),
@@ -429,5 +413,4 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       },
     );
   }
-
 }

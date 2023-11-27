@@ -10,12 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'package:projekt_inzynierski/services/firebase_firestore_groups_service.dart';
 import 'package:projekt_inzynierski/services/firebase_realtime_database_groups_service.dart';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 class ForumChatScreen extends StatefulWidget {
-  //final MaterialColor bordowyKolor;
-
   const ForumChatScreen({Key? key}) : super(key: key);
 
   @override
@@ -23,17 +18,12 @@ class ForumChatScreen extends StatefulWidget {
 }
 
 class _ForumChatScreenState extends State<ForumChatScreen> {
-  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
   List<Group> groups = [];
   Group selectedGroup = Group(id: '', name: '', participants: []);
   String addUserEmail = '';
   String removeUserEmail = '';
   TextEditingController messageController = TextEditingController();
   TextEditingController groupNameController = TextEditingController();
-  //bool isGroupListExpanded = true;
-  //bool isRightGroupListExpanded = true;
   FirebaseFirestoreGroupsService firestoreService = FirebaseFirestoreGroupsService();
   FirebaseRealtimeGroupsService realtimeService = FirebaseRealtimeGroupsService();
   AuthService authService = AuthService();
@@ -43,8 +33,6 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
   @override
   void initState() {
     super.initState();
-    // _configureFirebaseMessaging();
-    // _configureLocalNotifications();
     _auth.authStateChanges().listen((user) {
       setState(() {
         currentUser = user;
@@ -52,58 +40,6 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
       _loadUserGroups(user);
     });
   }
-
-  // void _configureFirebaseMessaging() {
-  //   _firebaseMessaging.configure(
-  //     onMessage: (Map<String, dynamic> message) async {
-  //       print("onMessage: $message");
-  //       _firebaseMessaging.getToken().then((token) {
-  //         print('FCM Token: $token');
-  //         // Save the token or send it to your server
-  //       });
-  //
-  //       // Show a local notification when a message is received.
-  //       _showNotification(message['notification']['title'], message['notification']['body']);
-  //     },
-  //     // Existing code...
-  //   );
-  // }
-
-  // void _showNotification(String title, String body) async {
-  //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-  //   AndroidNotificationDetails(
-  //     'your_channel_id',
-  //     'your_channel_name',
-  //     'your_channel_description',
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //   );
-  //   const NotificationDetails platformChannelSpecifics =
-  //   NotificationDetails(android: androidPlatformChannelSpecifics);
-  //
-  //   await flutterLocalNotificationsPlugin.show(
-  //     0,
-  //     title,
-  //     body,
-  //     platformChannelSpecifics,
-  //     payload: 'item x',
-  //   );
-  // }
-
-  // void _configureLocalNotifications() async {
-  //   const AndroidInitializationSettings initializationSettingsAndroid =
-  //   AndroidInitializationSettings('app_icon');
-  //
-  //   final InitializationSettings initializationSettings =
-  //   InitializationSettings(android: initializationSettingsAndroid);
-  //
-  //   await flutterLocalNotificationsPlugin.initialize(
-  //     initializationSettings,
-  //     onSelectNotification: (String? payload) async {
-  //       // Handle notification tap here.
-  //     },
-  //   );
-  // }
 
   void _loadUserGroups(User? user) async {
     if (user != null) {
@@ -138,18 +74,6 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
     }
   }
 
-  // void _toggleGroupList() {
-  //   setState(() {
-  //     isGroupListExpanded = !isGroupListExpanded;
-  //   });
-  // }
-  //
-  // void _toggleRightGroupList() {
-  //   setState(() {
-  //     isRightGroupListExpanded = !isRightGroupListExpanded;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,9 +89,12 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
                 Icons.list_alt,
               ),
             ),
-            Text(
-              selectedGroup.name,
-              style: const TextStyle(fontSize: 18.0),
+            Expanded(
+              child: Text(
+                selectedGroup.name,
+                style: const TextStyle(fontSize: 18.0),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             IconButton(
               onPressed: () {
@@ -182,48 +109,6 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
       ),
       body: Row(
         children: [
-          // Left sidebar with groups
-          // AnimatedContainer(
-          //   width: isGroupListExpanded ? 140.0 : 0.0,
-          //   duration: const Duration(milliseconds: 200),
-          //   curve: Curves.easeInOut,
-          //   child: isGroupListExpanded
-          //       ? Container(
-          //     color: Colors.grey[200],
-          //     child: ListView.builder(
-          //       itemCount: groups.length,
-          //       itemBuilder: (context, index) {
-          //         final Group group = groups[index];
-          //
-          //         final bool isSelected = group.id == selectedGroup.id;
-          //         return GestureDetector(
-          //           onTap: () {
-          //             setState(() {
-          //               selectedGroup = group;
-          //             });
-          //           },
-          //           child: Container(
-          //             margin: const EdgeInsets.only(bottom: 1.0),
-          //             padding: const EdgeInsets.all(8.0),
-          //             decoration: BoxDecoration(
-          //               color: isSelected
-          //                   ? DefaultSelectionStyle.defaultColor.withOpacity(0.5)
-          //                   : Colors.white,
-          //               border: Border.all(color: Colors.black),
-          //             ),
-          //             child: Text(
-          //               group.name,
-          //               style: const TextStyle(
-          //                 color: Colors.black,
-          //               ),
-          //             ),
-          //           ),
-          //         );
-          //       },
-          //     ),
-          //   )
-          //       : null,
-          // ),
           Expanded(
             child: Column(
               children: [
@@ -343,7 +228,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
                       ElevatedButton(
                         onPressed: () {
                           String message = messageController.text;
-                          sendMessage(message,selectedGroup.id);
+                          sendMessage(message, selectedGroup.id);
                           messageController.clear();
                         },
                         child: const Text(
@@ -359,74 +244,8 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
               ],
             ),
           ),
-          // AnimatedContainer(
-          //   width: isRightGroupListExpanded ? 140.0 : 0.0,
-          //   duration: const Duration(milliseconds: 200),
-          //   curve: Curves.easeInOut,
-          //   child: isRightGroupListExpanded
-          //       ? Container(
-          //     color: Colors.grey[300],
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.stretch,
-          //       children: [
-          //         const SizedBox(height: 20),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _showCreateGroupDialog(context);
-          //           },
-          //           child: const Text('Utwórz grupę'),
-          //         ),
-          //         if (isRightGroupListExpanded)
-          //           const SizedBox(height: 20),
-          //         const Text('Dodaj użytkownika:'),
-          //         TextFormField(
-          //           onChanged: (value) {
-          //             setState(() {
-          //               addUserEmail = value;
-          //             });
-          //           },
-          //           decoration: const InputDecoration(
-          //             labelText: 'Email użytkownika',
-          //           ),
-          //         ),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _addUserToGroup(selectedGroup.id, addUserEmail);
-          //           },
-          //           child: const Text('Dodaj użytkownika'),
-          //         ),
-          //         const Text('Usuń użytkownika:'),
-          //         TextFormField(
-          //           onChanged: (value) {
-          //             setState(() {
-          //               removeUserEmail = value;
-          //             });
-          //           },
-          //           decoration: const InputDecoration(
-          //             labelText: 'Email użytkownika',
-          //           ),
-          //         ),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _removeUserFromGroup(selectedGroup.id, removeUserEmail);
-          //           },
-          //           child: const Text('Usuń użytkownika'),
-          //         ),
-          //         const SizedBox(height: 50),
-          //         ElevatedButton(
-          //           onPressed: () {
-          //             _showDeleteGroupDialog(selectedGroup.id);
-          //           },
-          //           child: const Text('Usuń grupę'),
-          //         ),
-          //       ],
-          //     ),
-          //   )
-          //       : null,
-          // ),
         ],
       ),
-
     );
   }
 
@@ -492,7 +311,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
             TextButton(
               onPressed: () {
                 _deleteGroup(groupId);
-                Navigator.pop(context); // Upewnij się, że to jest wywoływane po usunięciu grupy
+                Navigator.pop(context);
               },
               child: const Text('Tak'),
             ),
@@ -507,13 +326,12 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
       },
     );
   }
+
   void _deleteGroup(String groupId) async {
     try {
-      // Delete the group using the service
       await firestoreService.deleteGroup(groupId);
 
       setState(() {
-        // Remove the group from the local list
         Group groupToDelete = groups.firstWhere((group) => group.id == groupId);
         groups.remove(groupToDelete);
         if (groups.isNotEmpty) {
@@ -526,6 +344,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
       print('Error deleting group: $error');
     }
   }
+
   void _showLeftPopup(BuildContext context, List<Group> groups) {
     showModalBottomSheet(
       context: context,
@@ -533,28 +352,25 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
         return Container(
           height: MediaQuery.of(context).size.height * 0.7,
           color: Colors.purpleAccent.withOpacity(0.2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 20),
-              for (Group group in groups)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedGroup = group;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      group.name,
-                     // style: const TextStyle(color: Colors.purple),
-                    ),
+          child: ListView.builder(
+            itemCount: groups.length,
+            itemBuilder: (context, index) {
+              final Group group = groups[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      selectedGroup = group;
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    group.name,
                   ),
                 ),
-            ],
+              );
+            },
           ),
         );
       },
@@ -572,28 +388,27 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
             children: [
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.all(16.0), // Zmienione na EdgeInsets.all
+                padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close the popup
+                    Navigator.pop(context);
                     _showCreateGroupDialog(context);
                   },
                   child: const Text('Utwórz grupę'),
                 ),
               ),
-             // const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.all(16.0), // Zmienione na EdgeInsets.all
+                padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close the popup
+                    Navigator.pop(context);
                     _showDeleteGroupDialog(selectedGroup.id);
                   },
                   child: const Text('Usuń grupę'),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0), // Zmienione na EdgeInsets.all
+                padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     _showAddUserDialog(context);
@@ -602,7 +417,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0), // Zmienione na EdgeInsets.all
+                padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     _showRemoveUserDialog(context);
@@ -648,7 +463,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Anuluj'),
             ),
@@ -682,13 +497,13 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
             TextButton(
               onPressed: () {
                 _removeUserFromGroup(selectedGroup.id, email);
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Usuń użytkownika'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Anuluj'),
             ),
@@ -697,6 +512,4 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
       },
     );
   }
-
-
 }

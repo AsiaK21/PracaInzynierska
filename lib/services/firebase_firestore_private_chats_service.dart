@@ -22,7 +22,6 @@ class FirebaseFirestoreGroupsService {
           await _firestore.collection('chats').doc(chatId).get();
           if (chatSnapshot.exists) {
             ownedChats.add(Chat(id: chatSnapshot['id'], name: chatSnapshot['name'], participants: []));
-            // ownedGroupNames.add(groupSnapshot['name']);
           }
         }
 
@@ -73,10 +72,7 @@ class FirebaseFirestoreGroupsService {
 
         await userRef.update({
           'chats': FieldValue.arrayUnion([id]),
-          //'chat_member_id': memberId,
         });
-
-        //memberId++;
       }
 
       print('Chat created successfully');
@@ -85,10 +81,9 @@ class FirebaseFirestoreGroupsService {
     }
   }
 
-  // Funkcja do tworzenia grupy
   Future<void> createChatWithParticipants(String chatName, List<String> participants) async {
     try {
-      String chatId = const Uuid().v4(); // Generate UUID
+      String chatId = const Uuid().v4();
       DocumentReference chatRef =
       await _firestore.collection('chats').add({
         'id': chatId,
