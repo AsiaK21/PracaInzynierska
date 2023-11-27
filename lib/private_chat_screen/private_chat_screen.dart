@@ -76,7 +76,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
               onPressed: () {
                 _showLeftSidebar();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.list_alt,
               ),
             ),
@@ -91,7 +91,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
               onPressed: () {
                 _showRightPopup(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.more_vert,
               ),
             ),
@@ -197,7 +197,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                           },
                           decoration: InputDecoration(
                             labelText: 'Napisz wiadomość ...',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.purpleAccent,
                               ),

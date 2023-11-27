@@ -5,8 +5,6 @@ import 'package:projekt_inzynierski/services/auth_service.dart';
 import 'package:projekt_inzynierski/models/chat_message.dart';
 import 'package:projekt_inzynierski/models/group.dart';
 
-import 'package:uuid/uuid.dart';
-
 import 'package:projekt_inzynierski/services/firebase_firestore_univercity_service.dart';
 import 'package:projekt_inzynierski/services/firebase_realtime_database_univercity_service.dart';
 
@@ -80,7 +78,7 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
               onPressed: () {
                 _showLeftPopup(context, groups);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.list_alt,
               ),
             ),
@@ -95,7 +93,7 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
               onPressed: () {
                 _showRightPopup(context, selectedGroup);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.more_vert,
               ),
             ),
@@ -206,7 +204,7 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
                           },
                           decoration: InputDecoration(
                             labelText: 'Napisz wiadomość ...',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.purpleAccent,
                               ),

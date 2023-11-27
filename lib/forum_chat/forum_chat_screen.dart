@@ -85,7 +85,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
               onPressed: () {
                 _showLeftPopup(context, groups);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.list_alt,
               ),
             ),
@@ -100,7 +100,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
               onPressed: () {
                 _showRightPopup(context, selectedGroup);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.more_vert,
               ),
             ),
@@ -211,7 +211,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
                           },
                           decoration: InputDecoration(
                             labelText: 'Napisz wiadomość ...',
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.purpleAccent,
                               ),
@@ -457,7 +457,7 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
             TextButton(
               onPressed: () {
                 _addUserToGroup(selectedGroup.id, email);
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: const Text('Dodaj użytkownika'),
             ),

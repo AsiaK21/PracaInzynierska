@@ -102,7 +102,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
     );
   }
 
-  // Metoda do wyświetlania dialogu zmiany hasła
   void _showChangePasswordDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -161,7 +160,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
     );
   }
 
-  // Metoda do zmiany hasła
   void _changePassword(String oldPassword, String newPassword, String repeatNewPassword) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
