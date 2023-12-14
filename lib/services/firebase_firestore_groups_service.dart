@@ -23,7 +23,6 @@ class FirebaseFirestoreGroupsService {
       }
       return joinedGroupNames;
     } catch (error) {
-      print('Error getting user joined groups: $error');
       return [];
     }
   }
@@ -44,14 +43,9 @@ class FirebaseFirestoreGroupsService {
           'groups': FieldValue.arrayUnion([id]),
           'group_member_id': memberId,
         });
-
         memberId++;
       }
-
-
-      print('Group created successfully');
     } catch (error) {
-      print('Error creating group: $error');
     }
   }
 
@@ -76,9 +70,7 @@ class FirebaseFirestoreGroupsService {
 
         memberId++;
       }
-      print('Group created successfully');
     } catch (error) {
-      print('Error creating group: $error');
     }
   }
 
@@ -89,11 +81,9 @@ class FirebaseFirestoreGroupsService {
         doc.reference.update({
           'participants': FieldValue.arrayUnion([email])
         });
-        print('User added successfully to the group');
       }
     })
         .catchError((error) {
-      print('Error adding user to group: $error');
     });
   }
 
@@ -104,11 +94,9 @@ class FirebaseFirestoreGroupsService {
         doc.reference.update({
           'participants': FieldValue.arrayRemove([email])
         });
-        print('User removed successfully from the group');
       }
     })
         .catchError((error) {
-      print('Error removing user from group: $error');
     });
   }
 
@@ -139,10 +127,7 @@ class FirebaseFirestoreGroupsService {
           'groups': FieldValue.arrayRemove([groupId]),
         });
       }
-
-      print('Grupa została pomyślnie usunięta.');
     } catch (error) {
-      print('Błąd podczas usuwania grupy: $error');
     }
   }
 }

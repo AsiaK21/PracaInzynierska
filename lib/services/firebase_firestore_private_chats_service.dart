@@ -27,11 +27,9 @@ class FirebaseFirestoreGroupsService {
 
         return ownedChats;
       } else {
-        print('User not found');
         return [];
       }
     } catch (error) {
-      print('Error getting user owned chats: $error');
       return [];
     }
   }
@@ -53,7 +51,6 @@ class FirebaseFirestoreGroupsService {
 
       return joinedChatNames;
     } catch (error) {
-      print('Error getting user joined groups: $error');
       return [];
     }
   }
@@ -66,7 +63,6 @@ class FirebaseFirestoreGroupsService {
         'participants': participants,
       });
 
-      //int memberId = 1;
       for (String email in participants) {
         DocumentReference userRef = _firestore.collection('users').doc(email);
 
@@ -74,10 +70,7 @@ class FirebaseFirestoreGroupsService {
           'chats': FieldValue.arrayUnion([id]),
         });
       }
-
-      print('Chat created successfully');
     } catch (error) {
-      print('Error creating chat: $error');
     }
   }
 
@@ -102,9 +95,7 @@ class FirebaseFirestoreGroupsService {
 
         memberId++;
       }
-      print('Chat created successfully');
     } catch (error) {
-      print('Error creating chat: $error');
     }
   }
 
@@ -115,11 +106,9 @@ class FirebaseFirestoreGroupsService {
         doc.reference.update({
           'participants': FieldValue.arrayUnion([email])
         });
-        print('User added successfully to the chat');
       });
     })
         .catchError((error) {
-      print('Error adding user to chat: $error');
     });
   }
 
@@ -150,10 +139,7 @@ class FirebaseFirestoreGroupsService {
           'chats': FieldValue.arrayRemove([chatId]),
         });
       }
-
-      print('Group deleted successfully');
     } catch (error) {
-      print('Error deleting group: $error');
     }
   }
 }

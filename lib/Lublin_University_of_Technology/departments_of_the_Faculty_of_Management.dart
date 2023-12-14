@@ -2,26 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_inzynierski/chats/chats.dart';
-import 'package:projekt_inzynierski/univercity_chat/univercity_chat_screen.dart';
-import '../services/firebase_firestore_univercity_service.dart';
+import 'package:projekt_inzynierski/university_chat/university_chat_screen.dart';
+import '../services/firebase_firestore_university_service.dart';
 
-class ConstructionSelectionScreen extends StatefulWidget {
+class ManagementsSelectionScreen extends StatefulWidget {
   @override
-  _ConstructionSelectionScreen createState() => _ConstructionSelectionScreen();
+  _ManagementsSelectionScreen createState() => _ManagementsSelectionScreen();
 }
 
-class _ConstructionSelectionScreen extends State<ConstructionSelectionScreen> {
-  List<String> departmentsofConstruction = [
-    'Katedra Inżynierii Procesów Budowlanych',
-    'Katedra Budownictwa Ogólnego',
-    'Katedra Dróg i Mostów',
-    'Katedra Mechaniki Ciała Stałego',
-    'Katedra Konstrukcji Budowlanych',
-    'Katedra Inżynierii Materiałów Budowlanych i Geoinżynierii',
-    'Katedra Mechaniki Budowli',
-    'Katedra Architektury, Urbanistyki i Planowania Przestrzennego',
-    'Katedra Konserwacji Zabytków',
-    'Katedra Architektury Współczesnej'
+class _ManagementsSelectionScreen extends State<ManagementsSelectionScreen> {
+  List<String> departmentsofManagements = [
+    'Katedra Ekonomii i Zarządzania Gospodarką',
+    'Katedra Finansów i Rachunkowości',
+    'Katedra Inżynierii Systemów Informacyjnych',
+    'Katedra Marketingu',
+    'Katedra Metod Ilościowych w Zarządzaniu',
+    'Katedra Organizacji Przedsiębiorstwa',
+    'Katedra Strategii i Projektowania Biznesu',
+    'Katedra Zarządzania'
   ];
 
   String selectedDepartment = '';
@@ -40,16 +38,14 @@ class _ConstructionSelectionScreen extends State<ConstructionSelectionScreen> {
       await FirebaseFirestoreUnivercityService().addUserToGroup(groupId, userEmail!);
 
       switch (department) {
-        case 'Katedra Inżynierii Procesów Budowlanych':
-        case 'Katedra Budownictwa Ogólnego':
-        case 'Katedra Dróg i Mostów':
-        case 'Katedra Mechaniki Ciała Stałego':
-        case 'Katedra Konstrukcji Budowlanych':
-        case 'Katedra Inżynierii Materiałów Budowlanych i Geoinżynierii':
-        case 'Katedra Mechaniki Budowli':
-        case 'Katedra Architektury, Urbanistyki i Planowania Przestrzennego':
-        case 'Katedra Konserwacji Zabytków':
-        case 'Katedra Architektury Współczesnej':
+        case 'Katedra Ekonomii i Zarządzania Gospodarką':
+        case 'Katedra Finansów i Rachunkowości':
+        case 'Katedra Inżynierii Systemów Informacyjnych':
+        case 'Katedra Marketingu':
+        case 'Katedra Metod Ilościowych w Zarządzaniu':
+        case 'Katedra Organizacji Przedsiębiorstwa':
+        case 'Katedra Strategii i Projektowania Biznesu':
+        case 'Katedra Zarządzania':
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -64,11 +60,8 @@ class _ConstructionSelectionScreen extends State<ConstructionSelectionScreen> {
           );
           break;
         default:
-          print('Wybrana katedra nie jest rozpoznawana.');
           break;
       }
-    } else {
-      print('Użytkownik nie jest uwierzytelniony.');
     }
   }
 
@@ -91,7 +84,7 @@ class _ConstructionSelectionScreen extends State<ConstructionSelectionScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 Column(
-                  children: departmentsofConstruction.map((department) {
+                  children: departmentsofManagements.map((department) {
                     return Column(
                       children: [
                         ElevatedButton(

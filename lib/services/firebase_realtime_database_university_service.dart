@@ -39,9 +39,7 @@ class FirebaseRealtimeGroupsService {
     try {
       DatabaseReference groupChatMessagesRef = groupChatReference.child(groupId);
       await groupChatMessagesRef.remove();
-      print('Group chat messages deleted successfully');
     } catch (error) {
-      print('Error deleting group chat messages: $error');
     }
   }
 }

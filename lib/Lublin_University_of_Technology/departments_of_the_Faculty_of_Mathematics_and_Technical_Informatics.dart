@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_inzynierski/chats/chats.dart';
-import 'package:projekt_inzynierski/univercity_chat/univercity_chat_screen.dart';
-import '../services/firebase_firestore_univercity_service.dart';
+import 'package:projekt_inzynierski/university_chat/university_chat_screen.dart';
+import '../services/firebase_firestore_university_service.dart';
 
 class MathematicsSelectionScreen extends StatefulWidget {
   @override
@@ -54,11 +54,8 @@ class _MathematicsSelectionScreen extends State<MathematicsSelectionScreen> {
           );
           break;
         default:
-          print('Wybrana katedra nie jest rozpoznawana.');
           break;
       }
-    } else {
-      print('Użytkownik nie jest uwierzytelniony.');
     }
   }
 

@@ -15,7 +15,6 @@ class AuthService {
       );
       return authResult.user;
     } catch (error) {
-      print('Błąd logowania: $error');
       return null;
     }
   }

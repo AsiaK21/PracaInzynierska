@@ -22,7 +22,6 @@ class FirebaseFirestoreUnivercityService {
 
       return joinedGroupNames;
     } catch (error) {
-      print('Error getting user joined groups: $error');
       return [];
     }
   }
@@ -34,11 +33,9 @@ class FirebaseFirestoreUnivercityService {
         doc.reference.update({
           'participants': FieldValue.arrayUnion([email])
         });
-        print('User added successfully to the group');
       }
     })
         .catchError((error) {
-      print('Error adding user to group: $error');
     });
   }
   Future<void> removeUserFromGroup(String groupId, String email) async {
@@ -48,11 +45,9 @@ class FirebaseFirestoreUnivercityService {
         doc.reference.update({
           'participants': FieldValue.arrayRemove([email])
         });
-        print('User removed successfully from the group');
       }
     })
         .catchError((error) {
-      print('Error removing user from group: $error');
     });
   }
 }

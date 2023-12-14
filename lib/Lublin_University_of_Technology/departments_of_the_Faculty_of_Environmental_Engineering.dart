@@ -2,25 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_inzynierski/chats/chats.dart';
-import 'package:projekt_inzynierski/univercity_chat/univercity_chat_screen.dart';
-import '../services/firebase_firestore_univercity_service.dart';
+import 'package:projekt_inzynierski/university_chat/university_chat_screen.dart';
+import '../services/firebase_firestore_university_service.dart';
 
-class InformaticsSelectionScreen extends StatefulWidget {
+class EnvironmentSelectionScreen extends StatefulWidget {
   @override
-  _InformaticsSelectionScreen createState() => _InformaticsSelectionScreen();
+  _EnvironmentSelectionScreen createState() => _EnvironmentSelectionScreen();
 }
 
-class _InformaticsSelectionScreen extends State<InformaticsSelectionScreen> {
-  List<String> departmentsofInformatics = [
-    'Katedra Automatyki i Metrologii',
-    'Katedra Elektrotechniki i Technologii Nadprzewodowych',
-    'Katedra Urządzeń Elektrycznych i Techniki Wysokich Napięć',
-    'Katedra Elektroenergetyki',
-    'Katedra Elektrotechniki i Technologii Inteligentnych',
-    'Katedra Informatyki',
-    'Katedra Elektrotechniki i Technik Informacyjnych',
-    'Katedra Napędów i Maszyn Elektrycznych',
-    'Katedra Matematyki'
+class _EnvironmentSelectionScreen extends State<EnvironmentSelectionScreen> {
+  List<String> departmentsofEnvironment = [
+    'Katedra Inżynierii Ochrony Środowiska',
+    'Katedra Inżynierii Odnawialnych Źródeł Energii',
+    'Katedra Jakości Powietrza Wewnętrznego i Zewnętrznego',
+    'Katedra Zaopatrzenia w Wodę i Usuwania Ścieków',
+    'Katedra Konwersji Biomasy i Odpadów w Biopaliwa'
   ];
 
   String selectedDepartment = '';
@@ -39,15 +35,11 @@ class _InformaticsSelectionScreen extends State<InformaticsSelectionScreen> {
       await FirebaseFirestoreUnivercityService().addUserToGroup(groupId, userEmail!);
 
       switch (department) {
-        case 'Katedra Automatyki i Metrologii':
-        case 'Katedra Elektrotechniki i Technologii Nadprzewodowych':
-        case 'Katedra Urządzeń Elektrycznych i Techniki Wysokich Napięć':
-        case 'Katedra Elektroenergetyki':
-        case 'Katedra Elektrotechniki i Technologii Inteligentnych':
-        case 'Katedra Informatyki':
-        case 'Katedra Elektrotechniki i Technik Informacyjnych':
-        case 'Katedra Napędów i Maszyn Elektrycznych':
-        case 'Katedra Matematyki':
+        case 'Katedra Inżynierii Ochrony Środowiska':
+        case 'Katedra Inżynierii Odnawialnych Źródeł Energii':
+        case 'Katedra Jakości Powietrza Wewnętrznego i Zewnętrznego':
+        case 'Katedra Zaopatrzenia w Wodę i Usuwania Ścieków':
+        case 'Katedra Konwersji Biomasy i Odpadów w Biopaliwa':
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -62,11 +54,8 @@ class _InformaticsSelectionScreen extends State<InformaticsSelectionScreen> {
           );
           break;
         default:
-          print('Wybrana katedra nie jest rozpoznawana.');
           break;
       }
-    } else {
-      print('Użytkownik nie jest uwierzytelniony.');
     }
   }
 
@@ -89,7 +78,7 @@ class _InformaticsSelectionScreen extends State<InformaticsSelectionScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 Column(
-                  children: departmentsofInformatics.map((department) {
+                  children: departmentsofEnvironment.map((department) {
                     return Column(
                       children: [
                         ElevatedButton(

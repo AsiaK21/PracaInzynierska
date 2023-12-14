@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:projekt_inzynierski/Lublin_Univercity_of_Technology/departments_of_Enviroment.dart';
-import 'package:projekt_inzynierski/Lublin_Univercity_of_Technology/departments_of_Informatics.dart';
-import 'package:projekt_inzynierski/Lublin_Univercity_of_Technology/departments_of_Managements.dart';
-import 'package:projekt_inzynierski/Lublin_Univercity_of_Technology/departments_of_Mathematics.dart';
-import 'package:projekt_inzynierski/Lublin_Univercity_of_Technology/departments_of_Mechanics.dart';
+import 'package:projekt_inzynierski/Lublin_University_of_Technology/departments_of_the_Faculty_of_Environmental_Engineering.dart';
+import 'package:projekt_inzynierski/Lublin_University_of_Technology/departments_of_the_Faculty_of_Electrical_Engineering_and_Computer_Science.dart';
+import 'package:projekt_inzynierski/Lublin_University_of_Technology/departments_of_the_Faculty_of_Management.dart';
+import 'package:projekt_inzynierski/Lublin_University_of_Technology/departments_of_the_Faculty_of_Mathematics_and_Technical_Informatics.dart';
+import 'package:projekt_inzynierski/Lublin_University_of_Technology/departments_of_the_Faculty_of_Mechanical_Engineering.dart';
 
-import '../services/firebase_firestore_univercity_service.dart';
-import 'departments_of_Construction.dart';
+import '../services/firebase_firestore_university_service.dart';
+import 'departments_of_the_Faculty_of_Construction_and_Architecture.dart';
 
 class FacultySelectionScreen extends StatefulWidget {
   @override
@@ -89,11 +89,8 @@ class _FacultySelectionScreenState extends State<FacultySelectionScreen> {
           );
           break;
         default:
-          print('Wybrany wydział nie jest rozpoznawany.');
           break;
       }
-    } else {
-      print('Użytkownik nie jest uwierzytelniony.');
     }
   }
 

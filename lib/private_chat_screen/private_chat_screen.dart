@@ -243,9 +243,6 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
         message,
         selectedChat.id,
       );
-      print(selectedChat.id);
-      print(message);
-      print(groupId);
     }
   }
 
@@ -339,7 +336,6 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
         }
       });
     } catch (error) {
-      print('Error deleting group: $error');
     }
   }
 

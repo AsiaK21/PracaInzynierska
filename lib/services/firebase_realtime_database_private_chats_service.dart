@@ -39,9 +39,7 @@ class FirebaseRealtimePrivateService {
     try {
       DatabaseReference privateChatMessagesRef = privateChatReference.child(chatId);
       await privateChatMessagesRef.remove();
-      print('Group chat messages deleted successfully');
     } catch (error) {
-      print('Error deleting group chat messages: $error');
     }
   }
 }

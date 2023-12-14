@@ -257,9 +257,6 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
         message,
         selectedGroup.id,
       );
-      print(selectedGroup.id);
-      print(message);
-      print(groupId);
     }
   }
 
@@ -341,7 +338,6 @@ class _ForumChatScreenState extends State<ForumChatScreen> {
         }
       });
     } catch (error) {
-      print('Error deleting group: $error');
     }
   }
 

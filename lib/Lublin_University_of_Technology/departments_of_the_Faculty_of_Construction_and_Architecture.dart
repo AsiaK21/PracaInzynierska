@@ -2,21 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_inzynierski/chats/chats.dart';
-import 'package:projekt_inzynierski/univercity_chat/univercity_chat_screen.dart';
-import '../services/firebase_firestore_univercity_service.dart';
+import 'package:projekt_inzynierski/university_chat/university_chat_screen.dart';
+import '../services/firebase_firestore_university_service.dart';
 
-class EnvironmentSelectionScreen extends StatefulWidget {
+class ConstructionSelectionScreen extends StatefulWidget {
   @override
-  _EnvironmentSelectionScreen createState() => _EnvironmentSelectionScreen();
+  _ConstructionSelectionScreen createState() => _ConstructionSelectionScreen();
 }
 
-class _EnvironmentSelectionScreen extends State<EnvironmentSelectionScreen> {
-  List<String> departmentsofEnvironment = [
-    'Katedra Inżynierii Ochrony Środowiska',
-    'Katedra Inżynierii Odnawialnych Źródeł Energii',
-    'Katedra Jakości Powietrza Wewnętrznego i Zewnętrznego',
-    'Katedra Zaopatrzenia w Wodę i Usuwania Ścieków',
-    'Katedra Konwersji Biomasy i Odpadów w Biopaliwa'
+class _ConstructionSelectionScreen extends State<ConstructionSelectionScreen> {
+  List<String> departmentsofConstruction = [
+    'Katedra Inżynierii Procesów Budowlanych',
+    'Katedra Budownictwa Ogólnego',
+    'Katedra Dróg i Mostów',
+    'Katedra Mechaniki Ciała Stałego',
+    'Katedra Konstrukcji Budowlanych',
+    'Katedra Inżynierii Materiałów Budowlanych i Geoinżynierii',
+    'Katedra Mechaniki Budowli',
+    'Katedra Architektury, Urbanistyki i Planowania Przestrzennego',
+    'Katedra Konserwacji Zabytków',
+    'Katedra Architektury Współczesnej'
   ];
 
   String selectedDepartment = '';
@@ -35,11 +40,16 @@ class _EnvironmentSelectionScreen extends State<EnvironmentSelectionScreen> {
       await FirebaseFirestoreUnivercityService().addUserToGroup(groupId, userEmail!);
 
       switch (department) {
-        case 'Katedra Inżynierii Ochrony Środowiska':
-        case 'Katedra Inżynierii Odnawialnych Źródeł Energii':
-        case 'Katedra Jakości Powietrza Wewnętrznego i Zewnętrznego':
-        case 'Katedra Zaopatrzenia w Wodę i Usuwania Ścieków':
-        case 'Katedra Konwersji Biomasy i Odpadów w Biopaliwa':
+        case 'Katedra Inżynierii Procesów Budowlanych':
+        case 'Katedra Budownictwa Ogólnego':
+        case 'Katedra Dróg i Mostów':
+        case 'Katedra Mechaniki Ciała Stałego':
+        case 'Katedra Konstrukcji Budowlanych':
+        case 'Katedra Inżynierii Materiałów Budowlanych i Geoinżynierii':
+        case 'Katedra Mechaniki Budowli':
+        case 'Katedra Architektury, Urbanistyki i Planowania Przestrzennego':
+        case 'Katedra Konserwacji Zabytków':
+        case 'Katedra Architektury Współczesnej':
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -54,11 +64,8 @@ class _EnvironmentSelectionScreen extends State<EnvironmentSelectionScreen> {
           );
           break;
         default:
-          print('Wybrana katedra nie jest rozpoznawana.');
           break;
       }
-    } else {
-      print('Użytkownik nie jest uwierzytelniony.');
     }
   }
 
@@ -81,7 +88,7 @@ class _EnvironmentSelectionScreen extends State<EnvironmentSelectionScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 Column(
-                  children: departmentsofEnvironment.map((department) {
+                  children: departmentsofConstruction.map((department) {
                     return Column(
                       children: [
                         ElevatedButton(

@@ -5,8 +5,8 @@ import 'package:projekt_inzynierski/services/auth_service.dart';
 import 'package:projekt_inzynierski/models/chat_message.dart';
 import 'package:projekt_inzynierski/models/group.dart';
 
-import 'package:projekt_inzynierski/services/firebase_firestore_univercity_service.dart';
-import 'package:projekt_inzynierski/services/firebase_realtime_database_univercity_service.dart';
+import 'package:projekt_inzynierski/services/firebase_firestore_university_service.dart';
+import 'package:projekt_inzynierski/services/firebase_realtime_database_university_service.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -250,9 +250,6 @@ class _UnivercityChatScreen extends State<UnivercityChatScreen> {
         message,
         selectedGroup.id,
       );
-      print(selectedGroup.id);
-      print(message);
-      print(groupId);
     }
   }
 

@@ -34,7 +34,6 @@ class RegisterScreen extends StatelessWidget {
                     password: passwordController.text,
                   );
                 } catch (e) {
-                  print(e.toString());
                 }
               },
               child: const Text('Zarejestruj się'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Lublin_Univercity_of_Technology/faculty_selection_screen.dart';
+import '../Lublin_University_of_Technology/faculty_selection_screen.dart';
 import '../chats/chats.dart';
 
 class EmailAndPasswordScreen extends StatelessWidget {
@@ -66,7 +66,6 @@ class EmailAndPasswordScreen extends StatelessWidget {
                             ),
                           );
                         } catch (e) {
-                          print(e.toString());
                         }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -89,8 +88,6 @@ class EmailAndPasswordScreen extends StatelessWidget {
                           ),
                         );
                       } catch (e) {
-                        // Handle login errors
-                        print(e.toString());
                       }
                     }
                   },

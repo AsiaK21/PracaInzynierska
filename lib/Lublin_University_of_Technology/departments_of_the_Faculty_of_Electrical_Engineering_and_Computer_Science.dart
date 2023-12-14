@@ -2,24 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_inzynierski/chats/chats.dart';
-import 'package:projekt_inzynierski/univercity_chat/univercity_chat_screen.dart';
-import '../services/firebase_firestore_univercity_service.dart';
+import 'package:projekt_inzynierski/university_chat/university_chat_screen.dart';
+import '../services/firebase_firestore_university_service.dart';
 
-class ManagementsSelectionScreen extends StatefulWidget {
+class InformaticsSelectionScreen extends StatefulWidget {
   @override
-  _ManagementsSelectionScreen createState() => _ManagementsSelectionScreen();
+  _InformaticsSelectionScreen createState() => _InformaticsSelectionScreen();
 }
 
-class _ManagementsSelectionScreen extends State<ManagementsSelectionScreen> {
-  List<String> departmentsofManagements = [
-    'Katedra Ekonomii i Zarządzania Gospodarką',
-    'Katedra Finansów i Rachunkowości',
-    'Katedra Inżynierii Systemów Informacyjnych',
-    'Katedra Marketingu',
-    'Katedra Metod Ilościowych w Zarządzaniu',
-    'Katedra Organizacji Przedsiębiorstwa',
-    'Katedra Strategii i Projektowania Biznesu',
-    'Katedra Zarządzania'
+class _InformaticsSelectionScreen extends State<InformaticsSelectionScreen> {
+  List<String> departmentsofInformatics = [
+    'Katedra Automatyki i Metrologii',
+    'Katedra Elektrotechniki i Technologii Nadprzewodowych',
+    'Katedra Urządzeń Elektrycznych i Techniki Wysokich Napięć',
+    'Katedra Elektroenergetyki',
+    'Katedra Elektrotechniki i Technologii Inteligentnych',
+    'Katedra Informatyki',
+    'Katedra Elektrotechniki i Technik Informacyjnych',
+    'Katedra Napędów i Maszyn Elektrycznych',
+    'Katedra Matematyki'
   ];
 
   String selectedDepartment = '';
@@ -38,14 +39,15 @@ class _ManagementsSelectionScreen extends State<ManagementsSelectionScreen> {
       await FirebaseFirestoreUnivercityService().addUserToGroup(groupId, userEmail!);
 
       switch (department) {
-        case 'Katedra Ekonomii i Zarządzania Gospodarką':
-        case 'Katedra Finansów i Rachunkowości':
-        case 'Katedra Inżynierii Systemów Informacyjnych':
-        case 'Katedra Marketingu':
-        case 'Katedra Metod Ilościowych w Zarządzaniu':
-        case 'Katedra Organizacji Przedsiębiorstwa':
-        case 'Katedra Strategii i Projektowania Biznesu':
-        case 'Katedra Zarządzania':
+        case 'Katedra Automatyki i Metrologii':
+        case 'Katedra Elektrotechniki i Technologii Nadprzewodowych':
+        case 'Katedra Urządzeń Elektrycznych i Techniki Wysokich Napięć':
+        case 'Katedra Elektroenergetyki':
+        case 'Katedra Elektrotechniki i Technologii Inteligentnych':
+        case 'Katedra Informatyki':
+        case 'Katedra Elektrotechniki i Technik Informacyjnych':
+        case 'Katedra Napędów i Maszyn Elektrycznych':
+        case 'Katedra Matematyki':
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -60,11 +62,9 @@ class _ManagementsSelectionScreen extends State<ManagementsSelectionScreen> {
           );
           break;
         default:
-          print('Wybrana katedra nie jest rozpoznawana.');
           break;
       }
     } else {
-      print('Użytkownik nie jest uwierzytelniony.');
     }
   }
 
@@ -87,7 +87,7 @@ class _ManagementsSelectionScreen extends State<ManagementsSelectionScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 Column(
-                  children: departmentsofManagements.map((department) {
+                  children: departmentsofInformatics.map((department) {
                     return Column(
                       children: [
                         ElevatedButton(

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test/expect.dart';
 import '../forum_chat/forum_chat_screen.dart';
 import '../private_chat_screen/private_chat_screen.dart';
-import '../univercity_chat/univercity_chat_screen.dart';
+import '../university_chat/university_chat_screen.dart';
 import '../user/email_and_password_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -182,7 +182,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
         );
       }
     } catch (e) {
-      print(e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Nie udało się zmienić hasła'),
